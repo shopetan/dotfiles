@@ -22,6 +22,11 @@
 (require 'cl)
 
 ;; 文字コード
+;; --------------
+(set-default-coding-systems 'utf-8-dos) ; デフォルトの文字コード
+(setq default-file-name-coding-system 'utf-8) ;dired用
+
+
 (set-language-environment "Japanese")
 (let ((ws window-system))
   (cond ((eq ws 'w32)
@@ -377,3 +382,43 @@
              ))
 ;; 全自動インデントを有効
 (setq c-auto-newline t)
+
+;; javascript
+(autoload 'js2-mode "js2-mode" nil t)
+(add-to-list 'auto-mode-alist '("\\.js$" . js2-mode))
+
+;; web-mode
+(require 'web-mode)
+;;; emacs 23以下の互換
+(when (< emacs-major-version 24)
+  (defalias 'prog-mode 'fundamental-mode))
+
+;;; 適用する拡張子
+(add-to-list 'auto-mode-alist '("\\.phtml$"     . web-mode))
+(add-to-list 'auto-mode-alist '("\\.tpl\\.php$" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.jsp$"       . web-mode))
+(add-to-list 'auto-mode-alist '("\\.as[cp]x$"   . web-mode))
+(add-to-list 'auto-mode-alist '("\\.erb$"       . web-mode))
+
+;; utf-8
+(prefer-coding-system 'utf-8)
+(setq coding-system-for-read 'utf-8)
+(setq coding-system-for-write 'utf-8)
+
+;;; インデント数
+(defun web-mode-hook ()
+  "Hooks for Web mode."
+  (setq web-mode-html-offset   2)
+  (setq web-mode-css-offset    2)
+  (setq web-mode-script-offset 2)
+  (setq web-mode-php-offset    2)
+  (setq web-mode-java-offset   2)
+  (setq web-mode-asp-offset    2))
+(add-hook 'web-mode-hook 'web-mode-hook)
+
+;; add emmet-mode
+(require 'emmet-mode)
+(add-hook 'sgml-mode-hook 'emmet-mode)
+(add-hook 'php-mode-hook 'emmet-mode)
+(add-hook 'emmet-mode-hook (lambda () (setq emmet-indentation 2)))
+(define-key emmet-mode-keymap (kbd "C-c C-j") 'emmet-expand-line)
