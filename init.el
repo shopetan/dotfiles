@@ -1,4 +1,4 @@
-                                        ; -*- Mode: Emacs-Lisp ; Coding: utf-8 -*-
+;; -*- Mode: Emacs-Lisp ; Coding: utf-8 -*-
 ;; ------------------------------------------------------------------------
 ;; @ load-path
 
@@ -98,7 +98,13 @@
 (setq-default indent-tabs-mode nil)
 
 ;; タブ幅
-(custom-set-variables '(tab-width 4))
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(safe-local-variable-values (quote ((encoding . utf-8))))
+ '(tab-width 4))
 
 ;; yes or noをy or n
 (fset 'yes-or-no-p 'y-or-n-p)
@@ -377,7 +383,7 @@
           '(lambda()
              (c-set-style "stroustrup")
              (setq indent-tabs-mode nil)     ; インデントは空白文字で行う（TABコードを空白に変換）
-             (c-set-offset 'innamespace 0)   ; namespace {}の中はインデントしない
+             
              (c-set-offset 'arglist-close 0) ; 関数の引数リストの閉じ括弧はインデントしない
              ))
 ;; 全自動インデントを有効
@@ -422,3 +428,41 @@
 (add-hook 'php-mode-hook 'emmet-mode)
 (add-hook 'emmet-mode-hook (lambda () (setq emmet-indentation 2)))
 (define-key emmet-mode-keymap (kbd "C-c C-j") 'emmet-expand-line)
+(put 'upcase-region 'disabled nil)
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )
+
+
+;;auto-save-buffers
+
+(require 'auto-save-buffers)
+
+;;; *.~ とかのバックアップファイルを作らない
+(setq make-backup-files nil)
+;;; .#* とかのバックアップファイルを作らない
+(setq auto-save-default nil)
+
+;;勝手に新しい行を追加するな!
+(setq next-line-add-newlines nil)
+
+;; use homebrew
+(add-to-list 'exec-path (expand-file-name "~/homebrew/bin"))
+
+;;use go get
+(add-to-list 'exec-path (expand-file-name "~/dev/go-workspace/bin"))
+
+(require 'go-mode)
+(require 'go-mode-autoloads)
+
+(add-hook 'before-save-hook 'gofmt-before-save)
+(add-hook 'go-mode-hook (lambda ()
+                          (local-set-key (kbd "M-.") 'godef-jump)))
+
+(require 'auto-complete-config)
+(eval-after-load "go-mode"
+  '(progn
+     (require 'go-autocomplete)))

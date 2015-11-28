@@ -1,4 +1,24 @@
-(((":deleteflag" .
+((("setPublish" .
+   [0 0 0 0 1 0 0 0 0 0])
+  ("ListenAndServe" .
+   [0 0 0 0 0 0 0 0 0 0 0 0 0 1])
+  ("http" .
+   [0 0 0 1])
+  ("Fprintln" .
+   [0 1 0 0 0 0 0 0])
+  ("Fprintf" .
+   [0 0 0 0 0 0 1])
+  ("fmt" .
+   [0 0 1])
+  ("func" .
+   [0 0 0 1])
+  ("HandleFunc" .
+   [0 0 0 0 0 0 1 0 0 0])
+  ("login_url" .
+   [0 0 0 0 0 0 0 0 1])
+  ("end" .
+   [1 0 0])
+  (":deleteflag" .
    [0 0 0 0 0 0 0 0 0 0 1])
   ("printf" .
    [0 0 0 1 0 0])
@@ -11,4 +31,38 @@
   ("calcBattlePoint" .
    [0 0 1 0 0 0 0 0 0 0 0 0 0 0 0])
   ("dragonpoleMain" .
-   [0 0 0 0 0 0 1 0 0 0 0 0 0 0])))
+   [0 0 0 0 0 0 1 0 0 0 0 0 0 0])
+  ("getKeywords" .
+   [1 0 0 0 0 0 0 0 0 0 0])
+  ("setDate" .
+   [0 0 0 1 0 0 0])
+  ("setMonth" .
+   [0 0 0 0 0 0 0 1])
+  ("oMagazine" .
+   [0 0 0 0 0 0 0 0 1])
+  ("getPublicationDate" .
+   [0 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0])
+  ("getPublish" .
+   [0 0 0 1 1 0 0 0 0 0])
+  ("getTitle" .
+   [0 0 0 0 0 0 0 1])
+  ("getPrice" .
+   [0 0 0 0 1 0 0 0])
+  ("obook" .
+   [0 1 0 0 2])
+  ("getWebsite" .
+   [0 0 0 0 0 0 0 0 0 1])
+  ("publish" .
+   [0 0 0 1 0 1 0])
+  ("month" .
+   [0 1 0 0 0])
+  ("date" .
+   [0 1 0 0])
+  ("searchBiblio" .
+   [0 0 1 0 0 0 0 0 0 0 0 1])
+  ("String" .
+   [0 0 0 0 0 1])
+  ("query" .
+   [0 0 0 0 1])
+  ("implements" .
+   [0 0 0 0 0 0 0 0 0 1])))
