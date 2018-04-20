@@ -190,16 +190,21 @@ fi
 #}}}
 
 # {{{ Zplug Setting
-#if [ ! -f /usr/local/opt/zplug/init.zsh ]; then
-#  curl -sL --proto-redir -all,https https://raw.githubusercontent.com/zplug/installer/master/installer.zsh| zsh
-#fi
+if [ ! -f /usr/local/opt/zplug/init.zsh ]; then
+  curl -sL --proto-redir -all,https https://raw.githubusercontent.com/zplug/installer/master/installer.zsh| zsh
+fi
+
 source /usr/local/opt/zplug/init.zsh
+
 zplug 'zplug/zplug', hook-build:'zplug --self-manage'
-#zplug mafredri/zsh-async, from:github
-#zplug sindresorhus/pure, use:pure.zsh, from:github, as:theme
+zplug mafredri/zsh-async, from:github
+zplug sindresorhus/pure, use:pure.zsh, from:github, as:theme
+zplug denysdovhan/spaceship-prompt, use:spaceship.zsh, from:github, as:theme
 zplug "mollifier/cd-gitroot"
 zplug "zsh-users/zsh-syntax-highlighting", defer:3
+zplug "zsh-users/zsh-history-substring-search"
 zplug "zsh-users/zsh-completions"
+zplug "zsh-users/zsh-autosuggestions"
 zplug "chrissicool/zsh-256color"
 zplug "mollifier/cd-gitroot"
 zplug "b4b4r07/emoji-cli"
@@ -224,8 +229,8 @@ zplug load --verbose > /dev/null
 ZSH_THEME=refined
 # optionally define some options
 autoload -U promptinit; promptinit
+#prompt spaceship
 prompt pure
-
 
 source $HOME/.cargo/env
 
@@ -287,3 +292,8 @@ fzf-z-search() {
 
 zle -N fzf-z-search
 bindkey '^f' fzf-z-search
+
+# Setting Brewfile
+if [ -f $(brew --prefix)/etc/brew-wrap ];then
+    source $(brew --prefix)/etc/brew-wrap
+    fi
