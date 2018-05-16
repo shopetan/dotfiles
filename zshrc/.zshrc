@@ -187,8 +187,9 @@ if [ -x /usr/bin/dircolors ]; then
     alias fgrep='fgrep --color=auto'
     alias egrep='egrep --color=auto'
 fi
-
-alias emacs='TERM=screen-16color emacs -nw'
+export TERM=xterm-256color
+#alias emacs='TERM=screen-16color emacs -nw'
+alias emacs='emacs -nw'
 alias vi='emacs'
 #}}}
 

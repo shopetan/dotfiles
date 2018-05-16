@@ -41,6 +41,7 @@ values."
      docker
      ansible
      html
+     ipython-notebook
      ;; ----------------------------------------------------------------
      ;; Example of useful layers you may want to use right away.
      ;; Uncomment some layer names and press <SPC f e R> (Vim style) or
@@ -140,10 +141,10 @@ values."
    ;; Press <SPC> T n to cycle to the next theme in the list (works great
    ;; with 2 themes variants, one dark and one light)
    dotspacemacs-themes '(
-                         solarized-dark
-                         solarized-light
-                         ;; moe-dark
-                         ;; moe-light
+                         ;; solarized-dark
+                         ;; solarized-light
+                         moe-dark
+                         moe-light
                          )
    ;; If non nil the cursor color matches the state color in GUI Emacs.
    dotspacemacs-colorize-cursor-according-to-state t
