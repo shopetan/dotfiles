@@ -64,6 +64,7 @@
 [url "https://e9c5fbaac795371b53705115edc3ea2e29eb4c7d:x-oauth-basic@github.com/"]
 	insteadOf = https://github.com/
 
-[url "github:"]
+[url "git@github.com:"]
     InsteadOf = https://github.com/
     InsteadOf = git@github.com:
+    InsteadOf = g:
