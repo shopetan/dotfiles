@@ -14,6 +14,7 @@
   excludesfile = ~/.gitignore  # globalな.gitignoreの指定
   autocrlf = input                 # CRLFを自動変換
 [alias]
+	unstage = reset HEAD
   st = status
   sh = show
   so = remote show origin
@@ -39,7 +40,7 @@
   ranking = shortlog -s -n --no-merges
   # logをtree表示
   lg = log --graph --date=short --pretty=format:'%Cgreen%h %cd %Cblue%cn %Creset%s'
-  lga = log --graph --all --color --pretty='%x09%h %cn%x09%s %Cred%d%Creset'
+  lga = log --graph --all --color --pretty=format:'%x09%h %cn%x09%s %Cred%d%Creset'
   # diff関連
   dm = diff master           # masterとのdiff
   dw = diff --color-words    # 単語単位でいろつけてdiff
@@ -60,11 +61,10 @@
   gn = grep -n
 
 [ghq]
-  root = ~/go/src
-[url "https://e9c5fbaac795371b53705115edc3ea2e29eb4c7d:x-oauth-basic@github.com/"]
-	insteadOf = https://github.com/
+	root = ~/.ghq
 
 [url "git@github.com:"]
     InsteadOf = https://github.com/
     InsteadOf = git@github.com:
-    InsteadOf = g:
+[http]
+	cookiefile = ~/.gitcookies

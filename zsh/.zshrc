@@ -5,9 +5,12 @@ export PATH="$HOME/.pyenv/bin:$PATH"
 eval "$(pyenv init -)"
 export SOLR_ENDPOINT='https://solr-admin:bibelot9585%2Fmellifluous@10-0-252-242-solr-admin-live5s.mercariapp.com/solr'
 
+export GOROOT=`go env GOROOT`
+#export GOROOT=`/usr/local/Cellar/go/1.12.4/libexec`
 export GOPATH=$HOME/go
 export PATH=$GOPATH/bin:$PATH
-export GOROOT=`go env GOROOT`
+
+export PROFILE=~/.zshrc make setup 
 
 # {{{ Alias
 if [ -x /usr/bin/dircolors ]; then
@@ -64,12 +67,6 @@ zplug load --verbose > /dev/null
 # optionally define some options
 autoload -U promptinit; promptinit
 #prompt pure
-
-# The next line updates PATH for the Google Cloud SDK.
-if [ -f '/Users/shohei.kikuchi/google-cloud-sdk/path.zsh.inc' ]; then source '/Users/shohei.kikuchi/google-cloud-sdk/path.zsh.inc'; fi
-
-# The next line enables shell command completion for gcloud.
-if [ -f '/Users/shohei.kikuchi/google-cloud-sdk/completion.zsh.inc' ]; then source '/Users/shohei.kikuchi/google-cloud-sdk/completion.zsh.inc'; fi
 
 export FLASK_APP="/Users/shohei.kikuchi/git/professor-x/professor-dashboard/professor_dashboard/routes.py"
 
@@ -186,3 +183,49 @@ function tmux_automatically_attach_session()
     fi
 }
 tmux_automatically_attach_session
+
+# The next line updates PATH for the Google Cloud SDK.
+if [ -f '/Users/shohei.kikuchi/Downloads/google-cloud-sdk/path.zsh.inc' ]; then . '/Users/shohei.kikuchi/Downloads/google-cloud-sdk/path.zsh.inc'; fi
+
+# direnv
+export EDITOR=emacs
+eval "$(direnv hook zsh)"
+export ANYENV_ROOT="/Users/shohei.kikuchi/.anyenv"
+export PATH=$PATH:"/Users/shohei.kikuchi/.anyenv/bin"
+eval "$(anyenv init -)"
+export PATH="$(brew --prefix php@7.1)/bin:$PATH"
+
+# using brew-file
+if [ -f $(brew --prefix)/etc/brew-wrap ];then
+    source $(brew --prefix)/etc/brew-wrap
+fi
+
+# kuebctlc alias
+alias k='kubectl'
+source <(kubectl completion zsh)
+
+# using kubernetes prompt info fo zsh
+source $HOME/.ghq/github.com/shopetan/dotfiles/kube-ps1/share/kube-ps1.sh
+KUBE_PS1_NS_ENABLE=false
+KUBE_PS1_SYMBOL_ENABLE=false
+KUBE_PS1_PREFIX=""
+KUBE_PS1_SUFFIX=""
+KUBE_PS1_CTX_COLOR="green"
+PROMPT='$(kube_ps1)'$PROMPT
+
+kube_context='$(color_kube_context $(kube_ps1))'
+function color_kube_context() {
+    if [ "$(echo $1 | grep prod)" ]; then
+        echo -e "%{$bg[red]%}%{$fg[white]%}$1%{$reset_color%}"
+    else
+        echo -e "$1"
+    fi
+}
+
+# ghq using peco
+alias g='cd $(ghq root)/$(ghq list | peco)'
+
+
+# jEnv
+export PATH="$JENV_ROOT/bin:$PATH"
+eval "$(jenv init -)"
