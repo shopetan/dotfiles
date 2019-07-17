@@ -1,10 +1,3 @@
-export ZPLUG_HOME=/usr/local/opt/zplug
-source $ZPLUG_HOME/init.zsh
-
-export PATH="$HOME/.pyenv/bin:$PATH"
-eval "$(pyenv init -)"
-export SOLR_ENDPOINT='https://solr-admin:bibelot9585%2Fmellifluous@10-0-252-242-solr-admin-live5s.mercariapp.com/solr'
-
 export GOROOT=`go env GOROOT`
 #export GOROOT=`/usr/local/Cellar/go/1.12.4/libexec`
 export GOPATH=$HOME/go
@@ -27,6 +20,9 @@ export TERM=xterm-256color
 #alias emacs='TERM=screen-16color emacs -nw'
 alias emacs='emacs -nw'
 #}}}
+
+export ZPLUG_HOME=/usr/local/opt/zplug
+source $ZPLUG_HOME/init.zsh
 
 # {{{ Zplug Setting
 if [ ! -f /usr/local/opt/zplug/init.zsh ]; then
@@ -67,8 +63,6 @@ zplug load --verbose > /dev/null
 # optionally define some options
 autoload -U promptinit; promptinit
 #prompt pure
-
-export FLASK_APP="/Users/shohei.kikuchi/git/professor-x/professor-dashboard/professor_dashboard/routes.py"
 
 autoload -Uz is-at-least
 
@@ -113,9 +107,7 @@ fzf-z-search() {
         return 1
     fi
 }
-
 zle -N fzf-z-search
-#bindkey '' fzf-z-search
 
 # Setting Brewfile
 if [ -f $(brew --prefix)/etc/brew-wrap ];then
@@ -185,14 +177,11 @@ function tmux_automatically_attach_session()
 tmux_automatically_attach_session
 
 # The next line updates PATH for the Google Cloud SDK.
-if [ -f '/Users/shohei.kikuchi/Downloads/google-cloud-sdk/path.zsh.inc' ]; then . '/Users/shohei.kikuchi/Downloads/google-cloud-sdk/path.zsh.inc'; fi
+if [ -f '~/Downloads/google-cloud-sdk/path.zsh.inc' ]; then . '~/Downloads/google-cloud-sdk/path.zsh.inc'; fi
 
 # direnv
 export EDITOR=emacs
 eval "$(direnv hook zsh)"
-export ANYENV_ROOT="/Users/shohei.kikuchi/.anyenv"
-export PATH=$PATH:"/Users/shohei.kikuchi/.anyenv/bin"
-eval "$(anyenv init -)"
 export PATH="$(brew --prefix php@7.1)/bin:$PATH"
 
 # using brew-file
