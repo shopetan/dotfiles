@@ -61,7 +61,7 @@
   gn = grep -n
 
 [ghq]
-	root = ~/.ghq
+	root = ~/src
 
 [url "git@github.com:"]
     InsteadOf = https://github.com/

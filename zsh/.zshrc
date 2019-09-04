@@ -1,9 +1,32 @@
 export GOROOT=`go env GOROOT`
 #export GOROOT=`/usr/local/Cellar/go/1.12.4/libexec`
-export GOPATH=$HOME/go
+export GOPATH=$HOME
 export PATH=$GOPATH/bin:$PATH
-
 export PROFILE=~/.zshrc make setup 
+
+export LANG=ja_JP.UTF-8
+
+autoload -Uz colors
+colors
+autoload -Uz compinit
+compinit
+
+setopt share_history
+setopt histignorealldups
+HISTFILE=~/.zsh_history
+HISTSIZE=10000
+SAVEHIST=10000
+
+setopt auto_cd
+setopt correct
+
+# コマンドを途中まで入力後、historyから絞り込み
+# 例 ls まで打ってCtrl+pでlsコマンドをさかのぼる、Ctrl+bで逆順
+autoload -Uz history-search-end
+zle -N history-beginning-search-backward-end history-search-end
+zle -N history-beginning-search-forward-end history-search-end
+bindkey "^p" history-beginning-search-backward-end
+bindkey "^b" history-beginning-search-forward-end
 
 # {{{ Alias
 if [ -x /usr/bin/dircolors ]; then
@@ -19,6 +42,9 @@ export TERM=xterm-256color
 
 #alias emacs='TERM=screen-16color emacs -nw'
 alias emacs='emacs -nw'
+alias kf='kubeoff'
+alias sourcez='source ~/.zshrc'
+
 #}}}
 
 export ZPLUG_HOME=/usr/local/opt/zplug
@@ -108,6 +134,24 @@ fzf-z-search() {
     fi
 }
 zle -N fzf-z-search
+bindkey '^f' fzf-z-search
+
+# fzf-history
+function select-history() {
+    BUFFER=$(history -n -r 1 | fzf --no-sort +m --query "$LBUFFER" --prompt="History > ")
+    CURSOR=$#BUFFER
+}
+zle -N select-history
+bindkey '^r' select-history
+
+# switch tmux 
+tm() {
+    [[ -n "$TMUX" ]] && change="switch-client" || change="attach-session"
+    if [ $1 ]; then
+        tmux $change -t "$1" 2>/dev/null || (tmux new-session -d -s $1 && tmux $change -t "$1"); return
+    fi
+    session=$(tmux list-sessions -F "#{session_name}" 2>/dev/null | fzf --exit-0) &&  tmux $change -t "$session" || echo "No sessions found."
+}
 
 # Setting Brewfile
 if [ -f $(brew --prefix)/etc/brew-wrap ];then
@@ -176,9 +220,6 @@ function tmux_automatically_attach_session()
 }
 tmux_automatically_attach_session
 
-# The next line updates PATH for the Google Cloud SDK.
-if [ -f '~/Downloads/google-cloud-sdk/path.zsh.inc' ]; then . '~/Downloads/google-cloud-sdk/path.zsh.inc'; fi
-
 # direnv
 export EDITOR=emacs
 eval "$(direnv hook zsh)"
@@ -194,15 +235,16 @@ alias k='kubectl'
 source <(kubectl completion zsh)
 
 # using kubernetes prompt info fo zsh
-source $HOME/.ghq/github.com/shopetan/dotfiles/kube-ps1/share/kube-ps1.sh
 KUBE_PS1_NS_ENABLE=false
 KUBE_PS1_SYMBOL_ENABLE=false
 KUBE_PS1_PREFIX=""
 KUBE_PS1_SUFFIX=""
 KUBE_PS1_CTX_COLOR="green"
-PROMPT='$(kube_ps1)'$PROMPT
+source $HOME/src/github.com/shopetan/dotfiles/kube-ps1/share/kube-ps1.sh
 
 kube_context='$(color_kube_context $(kube_ps1))'
+PROMPT="$kube_context %{${reset_color}%}%{${fg[yellow]}%}%n%# %{${reset_color}%}"
+
 function color_kube_context() {
     if [ "$(echo $1 | grep prod)" ]; then
         echo -e "%{$bg[red]%}%{$fg[white]%}$1%{$reset_color%}"
@@ -214,7 +256,13 @@ function color_kube_context() {
 # ghq using peco
 alias g='cd $(ghq root)/$(ghq list | peco)'
 
-
 # jEnv
 export PATH="$JENV_ROOT/bin:$PATH"
 eval "$(jenv init -)"
+
+# The next line updates PATH for the Google Cloud SDK.
+if [ -f '/Users/shohei.kikuchi/Downloads/google-cloud-sdk/path.zsh.inc' ]; then . '/Users/shohei.kikuchi/Downloads/google-cloud-sdk/path.zsh.inc'; fi
+
+# The next line enables shell command completion for gcloud.
+if [ -f '/Users/shohei.kikuchi/Downloads/google-cloud-sdk/completion.zsh.inc' ]; then . '/Users/shohei.kikuchi/Downloads/google-cloud-sdk/completion.zsh.inc'; fi
+export PATH="/usr/local/opt/binutils/bin:$PATH"
