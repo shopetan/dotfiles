@@ -243,7 +243,7 @@ KUBE_PS1_CTX_COLOR="green"
 source $HOME/src/github.com/shopetan/dotfiles/kube-ps1/share/kube-ps1.sh
 
 kube_context='$(color_kube_context $(kube_ps1))'
-PROMPT="$kube_context %{${reset_color}%}%{${fg[yellow]}%}%n%# %{${reset_color}%}"
+PROMPT="$kube_context %{${reset_color}%} %{${reset_color}%}"
 
 function color_kube_context() {
     if [ "$(echo $1 | grep prod)" ]; then
