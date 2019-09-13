@@ -18,7 +18,7 @@ HISTSIZE=10000
 SAVEHIST=10000
 
 setopt auto_cd
-setopt correct
+#setopt correct
 
 # コマンドを途中まで入力後、historyから絞り込み
 # 例 ls まで打ってCtrl+pでlsコマンドをさかのぼる、Ctrl+bで逆順
@@ -44,6 +44,9 @@ export TERM=xterm-256color
 alias emacs='emacs -nw'
 alias kf='kubeoff'
 alias sourcez='source ~/.zshrc'
+#alias ls='ls -lah -G'
+alias ls='exa --group-directories-first'
+alias ll='exa -hal --git --time-style=iso --group-directories-first'
 
 #}}}
 
@@ -266,3 +269,6 @@ if [ -f '/Users/shohei.kikuchi/Downloads/google-cloud-sdk/path.zsh.inc' ]; then 
 # The next line enables shell command completion for gcloud.
 if [ -f '/Users/shohei.kikuchi/Downloads/google-cloud-sdk/completion.zsh.inc' ]; then . '/Users/shohei.kikuchi/Downloads/google-cloud-sdk/completion.zsh.inc'; fi
 export PATH="/usr/local/opt/binutils/bin:$PATH"
+
+# thefuck
+eval $(thefuck --alias)
