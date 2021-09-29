@@ -1,5 +1,14 @@
-export GOROOT=`go env GOROOT`
-#export GOROOT=`/usr/local/Cellar/go/1.12.4/libexec`
+# use emacs keybind
+bindkey -e
+
+# argcompite
+autoload -U bashcompinit
+bashcompinit
+eval "$(register-python-argcomplete ~/.bash_completion.d/python-argcomplete)"
+
+
+#export GOROOT=`go env GOROOT`
+#export GOROOT=`/usr/local/Cellar/go/1.15.6/libexec`
 export GOPATH=$HOME
 export PATH=$GOPATH/bin:$PATH
 export PROFILE=~/.zshrc make setup 
@@ -8,8 +17,6 @@ export LANG=ja_JP.UTF-8
 
 autoload -Uz colors
 colors
-autoload -Uz compinit
-compinit
 
 setopt share_history
 setopt histignorealldups
@@ -47,7 +54,18 @@ alias sourcez='source ~/.zshrc'
 #alias ls='ls -lah -G'
 alias ls='exa --group-directories-first'
 alias ll='exa -hal --git --time-style=iso --group-directories-first'
+alias tree='ls --tree'
+alias kubepvc='kubectl get --no-headers=true -o custom-columns=":metadata.name" ns | xargs -I{} bash -c "kubectl -n '{}' --no-headers=true get pvc | wc -l | xargs echo {}: "'
+alias ssh-add-normal='ssh-add -D > /dev/null 2>&1; kill -0 ${SSH_AGENT_PID} > /dev/null 2>&1; if [ $? -ne 0 ]; then eval `ssh-agent`; fi; ssh-add ~/.ssh/id_ed25519'
 
+# alias gcp
+alias gcp='gcloud compute copy-files'
+alias gssh='gcloud compute ssh --ssh-flag="-A"'
+alias glist="gcloud compute instances list"
+alias gup='gcloud compute instances start'
+alias gdown='gcloud compute instances stop'
+
+alias gscp='gcloud compute scp --recurse'
 #}}}
 
 export ZPLUG_HOME=/usr/local/opt/zplug
@@ -224,7 +242,7 @@ function tmux_automatically_attach_session()
 tmux_automatically_attach_session
 
 # direnv
-export EDITOR=emacs
+export EDITOR=vi
 eval "$(direnv hook zsh)"
 export PATH="$(brew --prefix php@7.1)/bin:$PATH"
 
@@ -262,13 +280,15 @@ alias g='cd $(ghq root)/$(ghq list | peco)'
 # jEnv
 export PATH="$JENV_ROOT/bin:$PATH"
 eval "$(jenv init -)"
+export PATH="/usr/local/opt/binutils/bin:$PATH"
 
 # The next line updates PATH for the Google Cloud SDK.
 if [ -f '/Users/shohei.kikuchi/Downloads/google-cloud-sdk/path.zsh.inc' ]; then . '/Users/shohei.kikuchi/Downloads/google-cloud-sdk/path.zsh.inc'; fi
+export CLOUDSDK_PYTHON=python3
 
-# The next line enables shell command completion for gcloud.
-if [ -f '/Users/shohei.kikuchi/Downloads/google-cloud-sdk/completion.zsh.inc' ]; then . '/Users/shohei.kikuchi/Downloads/google-cloud-sdk/completion.zsh.inc'; fi
-export PATH="/usr/local/opt/binutils/bin:$PATH"
+# use pyenv
+eval "$(pyenv init -)"
 
-# thefuck
-eval $(thefuck --alias)
+# krew
+export PATH="${KREW_ROOT:-$HOME/.krew}/bin:$PATH"
+

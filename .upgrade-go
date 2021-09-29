@@ -1,0 +1,14 @@
+
+#!/bin/bash
+
+if [ $# -ne 1 ]; then
+    echo "upgrade-go <new_go_version>"
+    exit 1
+fi
+
+NEW_GO="go${1}"
+go get "golang.org/dl/${NEW_GO}"
+$NEW_GO download
+
+NEW_GO_PATH=$(which "$NEW_GO")
+ln -sF "$NEW_GO_PATH" /usr/local/bin/go
