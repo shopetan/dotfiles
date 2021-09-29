@@ -5,6 +5,7 @@ ln -sf ~/src/github.com/shopetan/dotfiles/spacemacs/.spacemacs ~/.spacemacs
 ln -sf ~/src/github.com/shopetan/dotfiles/git/.gitconfig ~/.gitconfig
 ln -sf ~/src/github.com/shopetan/dotfiles/zsh/.zshrc ~/.zshrc
 ln -sf ~/src/github.com/shopetan/dotfiles/zsh/.zshenv ~/.zshenv
+ln -sf ~/src/github.com/shopetan/dotfiles/.upgrade-go ~/.upgrade-go
 
 # change shell
 chsh -s $(which zsh)
